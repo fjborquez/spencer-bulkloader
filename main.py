@@ -1,3 +1,4 @@
+import os
 import time
 import json
 
@@ -6,6 +7,7 @@ import argparse
 
 from bson import json_util
 from pymongo import MongoClient
+from dotenv import load_dotenv
 
 def download_form(input):
     xbrl_dict = fxp.parse(
@@ -21,8 +23,14 @@ def extract_code(url):
     splited_url = url.split('/')
     return splited_url[-2]
 
+load_dotenv()
 
-CONNECTION_STRING = "mongodb://spencer-api:spencer-api@localhost:27017/spencer-api?retryWrites=true&w=majority"
+MONGO_USER = os.getenv('MONGO_USER')
+MONGO_PASSWORD = os.getenv('MONGO_PASSWORD')
+MONGO_SERVER = os.getenv('MONGO_SERVER')
+MONGO_DATABASE = os.getenv('MONGO_DATABASE')
+CONNECTION_STRING = "mongodb://" + MONGO_USER + ":" + MONGO_PASSWORD + "@" + MONGO_SERVER + "/" + MONGO_DATABASE + "?retryWrites=true&w=majority"
+
 client = MongoClient(CONNECTION_STRING)
 collection_name = client['spencer-api']
 

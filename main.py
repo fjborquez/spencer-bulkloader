@@ -53,7 +53,7 @@ for input in inputs:
         payload = {
             "tipo": type,
             "codigo": codigo,
-            "empresa_id": empresa['_id'],
+            "empresa_id": empresa['_id']['$oid'],
             "formulario": json,
         }
 
